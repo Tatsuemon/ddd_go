@@ -4,6 +4,8 @@ package model
 import (
 	"fmt"
 	"unicode/utf8"
+
+	"github.com/google/uuid"
 )
 
 type User struct {
@@ -23,6 +25,7 @@ func NewUser(name string, email string) (*User, error) {
 		return nil, fmt.Errorf("email is required.")
 	}
 	return &User{
+		ID:    uuid.New().String(),
 		Name:  name,
 		Email: email,
 	}, nil
