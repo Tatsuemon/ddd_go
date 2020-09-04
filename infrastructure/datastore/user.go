@@ -28,7 +28,7 @@ func (r *userPersistence) FindByID(id string) (*model.User, error) {
 	return nil, xerrors.New("error test")
 }
 
-func (r *userPe rsistence) FindByName(name string) (*model.User, error) {
+func (r *userPersistence) FindByName(name string) (*model.User, error) {
 	// TODO(Tatsuemon): 処理
 	return nil, xerrors.New("error test")
 }
