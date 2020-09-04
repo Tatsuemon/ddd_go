@@ -1,8 +1,9 @@
-package infrastructure
+package datastore
 
 import (
 	"github.com/Tatsuemon/ddd_go/domain/model"
 	"github.com/Tatsuemon/ddd_go/domain/repository"
+	"golang.org/x/xerrors"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -19,30 +20,30 @@ func NewUserPersistence(conn *sqlx.DB) repository.UserRepository {
 
 func (r *userPersistence) FindAll() ([]*model.User, error) {
 	// TODO(Tatsuemon): 処理
-	return nil, nil
+	return nil, xerrors.New("error test")
 }
 
 func (r *userPersistence) FindByID(id string) (*model.User, error) {
 	// TODO(Tatsuemon): 処理
-	return nil, nil
+	return nil, xerrors.New("error test")
 }
 
-func (r *userPersistence) FindByName(name string) (*model.User, error) {
+func (r *userPe rsistence) FindByName(name string) (*model.User, error) {
 	// TODO(Tatsuemon): 処理
-	return nil, nil
+	return nil, xerrors.New("error test")
 }
 
 func (r *userPersistence) Store(user *model.User) (*model.User, error) {
 	// TODO(Tatsuemon): 処理
-	return nil
+	return nil, xerrors.New("error test")
 }
 
 func (r *userPersistence) Update(user *model.User) (*model.User, error) {
 	// TODO(Tatsuemon): 処理
-	return nil
+	return nil, xerrors.New("error test")
 }
 
 func (r *userPersistence) Delete(user *model.User) error {
 	// TODO(Tatsuemon): 処理
-	return nil
+	return xerrors.New("error test")
 }
