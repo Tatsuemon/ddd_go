@@ -8,10 +8,10 @@ import (
 // APIのハンドラ用で使用するメソッドのインターフェース
 type UserUseCase interface {
 	GetUsers() ([]*model.User, error)
-	GetUser(id int) (*model.User, error)
+	GetUser(id string) (*model.User, error)
 	CreateUser(user *model.User) (*model.User, error)
 	UpdateUser(user *model.User) (*model.User, error)
-	DeleteUser(id int) error
+	DeleteUser(id string) error
 }
 
 type userUseCase struct {
@@ -27,7 +27,7 @@ func (u *userUseCase) GetUsers() ([]*model.User, error) {
 	return u.UserRepository.FindAll()
 }
 
-func (u *userUseCase) GetUser(id int) (*model.User, error) {
+func (u *userUseCase) GetUser(id string) (*model.User, error) {
 	return u.UserRepository.FindByID(id)
 }
 
@@ -39,7 +39,7 @@ func (u *userUseCase) UpdateUser(user *model.User) (*model.User, error) {
 	return u.UserRepository.Update(user)
 }
 
-func (u *userUseCase) DeleteUser(id int) error {
+func (u *userUseCase) DeleteUser(id string) error {
 	user, err := u.UserRepository.FindByID(id)
 	if err != nil {
 		return nil, err

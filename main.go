@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Print("ssss")
-	server.Run(8080)
+	infrastructure.Run(8080)
 }
