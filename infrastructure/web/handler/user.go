@@ -27,13 +27,13 @@ func NewUserHandler(u usecase.UserUseCase) UserHandler {
 }
 
 func (h *userHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
-	users, err := h.UserUseCase.GetUsers()
+	u, err := h.UserUseCase.GetUsers()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	response := map[string]interface{}{"users": users}
+	response := map[string]interface{}{"users": u}
 	respondWithJson(w, http.StatusOK, response)
 	return
 }
@@ -41,42 +41,46 @@ func (h *userHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 func (h *userHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	user, err := h.UserUseCase.GetUser(id)
+	u, err := h.UserUseCase.GetUser(id)
 	if err != nil {
 		// TODO: not foundもある
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	response := map[string]interface{}{"user": user}
+	response := map[string]interface{}{"user": u}
 	respondWithJson(w, http.StatusOK, response)
 	return
 }
 
 func (h *userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
-	var u *model.User
-	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
+	type payload struct {
+		Name  string `json: "name"`
+		Email string `json: "email"`
+	}
+	var p payload
+	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 	defer r.Body.Close()
 
-	user, err := model.NewUser(
-		u.Name,
-		u.Email,
+	u, err := model.NewUser(
+		p.Name,
+		p.Email,
 	)
 
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	user, err = h.UserUseCase.CreateUser(user)
+	u, err = h.UserUseCase.CreateUser(u)
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	response := map[string]interface{}{"user": user}
+	response := map[string]interface{}{"user": u}
 	respondWithJson(w, http.StatusCreated, response)
 	return
 }
