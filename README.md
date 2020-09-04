@@ -20,3 +20,9 @@ $ skeema pull # dbから反映
 ```
 $ wire ./di/wire.go
 ```
+
+## TODO
+
+- docker-compose
+- transaction
+- env
