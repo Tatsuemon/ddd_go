@@ -20,6 +20,7 @@ type userUseCase struct {
 
 // コンストラクタ
 func NewUserUseCase(r repository.UserRepository) UserUseCase {
+	// TODO: バリデーションはここ
 	return &userUseCase{r}
 }
 
@@ -42,7 +43,7 @@ func (u *userUseCase) UpdateUser(user *model.User) (*model.User, error) {
 func (u *userUseCase) DeleteUser(id string) error {
 	user, err := u.UserRepository.FindByID(id)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	return u.UserRepository.Delete(user)
 }
