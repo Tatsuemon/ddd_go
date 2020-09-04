@@ -3,10 +3,9 @@ package main
 import (
 	"log"
 
+	di "github.com/Tatsuemon/ddd_go/di/containers"
 	server "github.com/Tatsuemon/ddd_go/infrastructure"
 	"github.com/Tatsuemon/ddd_go/infrastructure/datastore"
-	"github.com/Tatsuemon/ddd_go/infrastructure/web/handler"
-	"github.com/Tatsuemon/ddd_go/usecase"
 )
 
 func main() {
@@ -15,7 +14,8 @@ func main() {
 		port       = 8080
 	)
 
-	db, err := datastore.NewDB(datasource)
+	// TODO(Tatsuemon): config.DSN()を使用
+	db, err := datastore.NewMysqlDB(datasource)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,13 +25,8 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-
-	userRep := datastore.NewUserPersistence(db)
-	userUC := usecase.NewUserUseCase(userRep)
-
-	userHd := handler.NewUserHandler(userUC)
-
+	userContainer := di.NewUserContainer("test", db.DB)
 	s := server.NewServer()
-	s.Init(db, userHd)
+	s.Init(userContainer.Handler)
 	s.Run(port)
 }

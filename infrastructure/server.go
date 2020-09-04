@@ -7,11 +7,9 @@ import (
 	"github.com/Tatsuemon/ddd_go/infrastructure/web/handler"
 	"github.com/Tatsuemon/ddd_go/infrastructure/web/router"
 	"github.com/gorilla/mux"
-	"github.com/jmoiron/sqlx"
 )
 
 type Server struct {
-	db     *sqlx.DB
 	router *mux.Router
 }
 
@@ -19,9 +17,8 @@ func NewServer() *Server {
 	return &Server{}
 }
 
-func (s *Server) Init(db *sqlx.DB, h handler.AppHandler) {
+func (s *Server) Init(h handler.AppHandler) {
 	s.router = router.NewMuxRouter(h)
-	s.db = db
 }
 
 func (s *Server) Run(port int) {

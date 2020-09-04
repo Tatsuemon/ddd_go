@@ -6,7 +6,15 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func NewDB(datasource string) (*sqlx.DB, error) {
+type DataBase interface {
+	Close() error
+}
+
+type MysqlDB struct {
+	DB *sqlx.DB
+}
+
+func NewMysqlDB(datasource string) (*MysqlDB, error) {
 	db, err := sqlx.Open("mysql", datasource)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open MySQL: %w", err)
@@ -21,5 +29,9 @@ func NewDB(datasource string) (*sqlx.DB, error) {
 		return nil, fmt.Errorf("failed to ping: %w", err)
 	}
 
-	return db, nil
+	return &MysqlDB{DB: db}, nil
+}
+
+func (m *MysqlDB) Close() error {
+	return m.DB.Close()
 }

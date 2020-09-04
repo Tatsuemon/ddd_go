@@ -18,7 +18,7 @@ func NewUserService(r repository.UserRepository) UserService {
 }
 
 func (u *userService) Exists(name string) (bool, error) {
-	user, _ := u.UserRepository.FindyName(name)
+	user, _ := u.UserRepository.FindByName(name)
 	if user == nil {
 		return true, nil
 	}

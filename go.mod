@@ -13,6 +13,7 @@ require (
 	github.com/golang/mock v1.4.4 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/uuid v1.1.2
+	github.com/google/wire v0.4.0
 	github.com/gorilla/mux v1.8.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/labstack/gommon v0.3.0

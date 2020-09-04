@@ -17,3 +17,6 @@ $ skeema pull # dbから反映
 ```
 
 ### di
+```
+$ wire ./di/wire.go
+```
