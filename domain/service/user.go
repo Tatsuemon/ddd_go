@@ -1,7 +1,7 @@
 package service
 
 import (
-	"ddd_go/domain/repository"
+	"github.com/Tatsuemon/ddd_go/domain/repository"
 )
 
 type UserService interface {

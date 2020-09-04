@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"ddd_go/domain/model"
-	"ddd_go/usecase"
 	"encoding/json"
+	"github.com/Tatsuemon/ddd_go/domain/model"
+	"github.com/Tatsuemon/ddd_go/usecase"
 	"net/http"
 
 	"github.com/gorilla/mux"

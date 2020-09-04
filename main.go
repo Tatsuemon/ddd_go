@@ -1,8 +1,6 @@
 package main
 
-import (
-	"ddd_go/infrastructure/server"
-)
+import "github.com/Tatsuemon/ddd_go/infrastructure/server"
 
 func main() {
 	server.Run(8080)

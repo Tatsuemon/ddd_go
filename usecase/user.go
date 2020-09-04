@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"ddd_go/domain/model"
-	"ddd_go/domain/repository"
+	"github.com/Tatsuemon/ddd_go/domain/model"
+	"github.com/Tatsuemon/ddd_go/domain/repository"
 )
 
 // APIのハンドラ用で使用するメソッドのインターフェース

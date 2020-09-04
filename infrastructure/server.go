@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"ddd_go/infrastructure/web/router"
+	"github.com/Tatsuemon/ddd_go/infrastructure/web/router"
 )
 
 func Run(port int) {

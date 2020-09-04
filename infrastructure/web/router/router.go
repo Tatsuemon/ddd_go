@@ -1,7 +1,7 @@
 package router
 
 import (
-	"ddd_go/infrastructure/web/handler"
+	"github.com/Tatsuemon/ddd_go/infrastructure/web/handler"
 
 	"github.com/gorilla/mux"
 )
