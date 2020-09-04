@@ -33,7 +33,8 @@ func (h *userHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJson(w, http.StatusOK, users)
+	response := map[string]interface{}{"users": users}
+	respondWithJson(w, http.StatusOK, response)
 	return
 }
 
@@ -47,7 +48,8 @@ func (h *userHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJson(w, http.StatusOK, user)
+	response := map[string]interface{}{"user": user}
+	respondWithJson(w, http.StatusOK, response)
 	return
 }
 
@@ -57,6 +59,7 @@ func (h *userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
+	defer r.Body.Close()
 
 	user, err := model.NewUser(
 		u.Name,
@@ -73,7 +76,8 @@ func (h *userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusCreated, user)
+	response := map[string]interface{}{"user": user}
+	respondWithJson(w, http.StatusCreated, response)
 	return
 }
 
@@ -83,19 +87,17 @@ func (h *userHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-
 	defer r.Body.Close()
+
 	vars := mux.Vars(r)
-	id := vars["id"]
-	u.ID = id
-	var err error
-	u, err = h.UserUseCase.UpdateUser(u)
+	u, err := h.UserUseCase.UpdateUser(u, vars["id"])
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusOK, u)
+	response := map[string]interface{}{"user": u}
+	respondWithJson(w, http.StatusOK, response)
 	return
 }
 

@@ -10,7 +10,7 @@ type UserUseCase interface {
 	GetUsers() ([]*model.User, error)
 	GetUser(id string) (*model.User, error)
 	CreateUser(user *model.User) (*model.User, error)
-	UpdateUser(user *model.User) (*model.User, error)
+	UpdateUser(user *model.User, id string) (*model.User, error)
 	DeleteUser(id string) error
 }
 
@@ -20,7 +20,6 @@ type userUseCase struct {
 
 // コンストラクタ
 func NewUserUseCase(r repository.UserRepository) UserUseCase {
-	// TODO: バリデーションはここ
 	return &userUseCase{r}
 }
 
@@ -36,7 +35,8 @@ func (u *userUseCase) CreateUser(user *model.User) (*model.User, error) {
 	return u.UserRepository.Store(user)
 }
 
-func (u *userUseCase) UpdateUser(user *model.User) (*model.User, error) {
+func (u *userUseCase) UpdateUser(user *model.User, id string) (*model.User, error) {
+	user.ID = id
 	return u.UserRepository.Update(user)
 }
 
