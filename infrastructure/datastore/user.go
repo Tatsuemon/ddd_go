@@ -3,7 +3,6 @@ package datastore
 import (
 	"github.com/Tatsuemon/ddd_go/domain/model"
 	"github.com/Tatsuemon/ddd_go/domain/repository"
-	"golang.org/x/xerrors"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -19,31 +18,91 @@ func NewUserPersistence(conn *sqlx.DB) repository.UserRepository {
 }
 
 func (r *userPersistence) FindAll() ([]*model.User, error) {
-	// TODO(Tatsuemon): 処理
-	return nil, xerrors.New("error test")
+	users := make([]*model.User, 0)
+	if err := r.conn.Select(&users, "Select id, name, email FROM users"); err != nil {
+		return nil, err
+	}
+	return users, nil
 }
 
 func (r *userPersistence) FindByID(id string) (*model.User, error) {
-	// TODO(Tatsuemon): 処理
-	return nil, xerrors.New("error test")
+	user := model.User{}
+	if err := r.conn.Get(&user, "Select id, name, email FROM users WHERE id = ?", id); err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (r *userPersistence) FindByName(name string) (*model.User, error) {
-	// TODO(Tatsuemon): 処理
-	return nil, xerrors.New("error test")
+	user := model.User{}
+	if err := r.conn.Get(&user, "Select id, name, email FROM users WHERE name = ?", name); err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 func (r *userPersistence) Store(user *model.User) (*model.User, error) {
-	// TODO(Tatsuemon): 処理
-	return nil, xerrors.New("error test")
+	stmt, err := r.conn.Prepare("INSERT INTO `users` (id, name, email) VALUES(?, ?, ?)")
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if closeErr := stmt.Close(); closeErr != nil {
+			err = closeErr
+		}
+	}()
+
+	_, err = stmt.Exec(user.ID, user.Name, user.Email)
+	// TODO(Tatsuemon): エラーハンドリングをもっと詳細に
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (r *userPersistence) Update(user *model.User) (*model.User, error) {
-	// TODO(Tatsuemon): 処理
-	return nil, xerrors.New("error test")
+	stmt, err := r.conn.Prepare("UPDATE `users` SET name=?, email=? WHERE id=?")
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer func() {
+		if closeErr := stmt.Close(); closeErr != nil {
+			err = closeErr
+		}
+	}()
+
+	_, err = stmt.Exec(user.Name, user.Email, user.ID)
+	// TODO(Tatsuemon): エラーハンドリングをもっと詳細に
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }
 
 func (r *userPersistence) Delete(user *model.User) error {
-	// TODO(Tatsuemon): 処理
-	return xerrors.New("error test")
+	stmt, err := r.conn.Prepare("DELETE FROM `users` WHERE id=?")
+
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if closeErr := stmt.Close(); closeErr != nil {
+			err = closeErr
+		}
+	}()
+
+	_, err = stmt.Exec(user.ID)
+	// TODO(Tatsuemon): エラーハンドリングをもっと詳細に
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

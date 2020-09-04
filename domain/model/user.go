@@ -14,7 +14,6 @@ type User struct {
 	Email string `json:"email" db:"email"`
 }
 
-// 作ったけど使わなそう
 // TODO(Tatsuemon): バリデーションをいれるべき
 func NewUser(name string, email string) (*User, error) {
 	if name == "" {

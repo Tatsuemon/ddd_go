@@ -58,15 +58,22 @@ func (h *userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	defer r.Body.Close()
-	var err error
-	u, err = h.UserUseCase.CreateUser(u)
+	user, err := model.NewUser(
+		u.Name,
+		u.Email,
+	)
+
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	user, err = h.UserUseCase.CreateUser(user)
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	respondWithJson(w, http.StatusCreated, u)
+	respondWithJson(w, http.StatusCreated, user)
 	return
 }
 
@@ -110,6 +117,7 @@ func respondWithError(w http.ResponseWriter, code int, message string) {
 }
 
 func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
+	// TODO(Tatsuemon): 変える
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)

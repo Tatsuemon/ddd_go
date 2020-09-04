@@ -9,3 +9,10 @@
 4. Repository
 
 
+#### db
+- `/schmas/` 以下にcreate文を書いたsqlを配置
+```
+$ skeema diff # 差分
+$ skeema push # dbに反映
+$ skeema pull # dbから反映
+```
