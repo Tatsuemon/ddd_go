@@ -9,12 +9,11 @@
 4. Repository
 
 #### db
-- `/schmas/` 以下にcreate文を書いたsqlを配置
 ```
-$ sql-migrate status # status確認
-$ sql-migrate up # migrate
-$ sql-migrate down # rollback
-$ sql-migrate new ????? # migration fileの作成
+$ docker-compose run app sql-migrate status # status確認
+$ docker-compose run app sql-migrate up # migrate
+$ docker-compose run app sql-migrate down # rollback
+$ docker-compose run app sql-migrate new ????? # migration fileの作成
 ```
 
 ## TODO

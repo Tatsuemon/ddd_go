@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/app/Dockerfile
+        tty: true
+        ports:
+            - "8080:8080"
+        container_name: ddd_go
+        depends_on:
+            - db
+        environment:
+            DB_USER: mysqluser
+            DB_PASSWORD: mysqlpass
+            DB_HOST: db
+            DB_PORT: 3306
+            DB_DATABASE: ddd_go
+        command: sh -c "./wait-for-it.sh db:3306;fresh;"
+    db:
+        build:
+            context: .
+            dockerfile: docker/mysql/Dockerfile
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: mysqluser
+            MYSQL_PASSWORD: mysqlpass
+            MYSQL_DATABASE: ddd_go
+        container_name: ddd_go-db
+        volumes:
+            - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+            - db-data:/var/lib/mysql
+volumes:
+    db-data:

@@ -3,19 +3,16 @@ package main
 import (
 	"log"
 
+	"github.com/Tatsuemon/ddd_go/config"
 	di "github.com/Tatsuemon/ddd_go/di/containers"
 	server "github.com/Tatsuemon/ddd_go/infrastructure"
 	"github.com/Tatsuemon/ddd_go/infrastructure/datastore"
 )
 
 func main() {
-	var (
-		datasource = "root:@/ddd_go"
-		port       = 8080
-	)
+	var port = 8080
 
-	// TODO(Tatsuemon): config.DSN()を使用
-	db, err := datastore.NewMysqlDB(datasource)
+	db, err := datastore.NewMysqlDB(config.DSN())
 	if err != nil {
 		log.Fatal(err)
 	}
