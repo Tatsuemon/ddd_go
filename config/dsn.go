@@ -8,10 +8,10 @@ import (
 func DSN() string {
 	return fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s",
-		os.Getenv("DB_USER"),     // mysql
-		os.Getenv("DB_PASSWORD"), // mysqlpass
-		os.Getenv("DB_HOST"),     // db
-		os.Getenv("DB_PORT"),     // 3306
-		os.Getenv("DB_DATABASE"), // ddd_go
+		os.Getenv("MYSQL_USER"),     // mysql
+		os.Getenv("MYSQL_PASSWORD"), // mysqlpass
+		os.Getenv("MYSQL_HOST"),     // db
+		os.Getenv("MYSQL_PORT"),     // 3306
+		os.Getenv("MYSQL_DATABASE"), // ddd_go
 	) + "?parseTime=true&collation=utf8mb4_bin"
 }

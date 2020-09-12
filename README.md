@@ -17,7 +17,4 @@ $ docker-compose run app sql-migrate new ????? # migration fileの作成
 ```
 
 ## TODO
-
-- docker-compose
 - transaction
-- env
