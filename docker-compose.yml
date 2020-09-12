@@ -33,5 +33,14 @@ services:
         volumes:
             - ./docker/mysql/sql:/docker-entrypoint-initdb.d
             - db-data:/var/lib/mysql
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        restart: always
+        ports:
+            - 80:80
+        depends_on:
+            - app
 volumes:
     db-data:
