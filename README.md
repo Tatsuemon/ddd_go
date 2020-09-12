@@ -11,14 +11,10 @@
 #### db
 - `/schmas/` 以下にcreate文を書いたsqlを配置
 ```
-$ skeema diff # 差分
-$ skeema push # dbに反映
-$ skeema pull # dbから反映
-```
-
-### di
-```
-$ wire ./di/wire.go
+$ sql-migrate status # status確認
+$ sql-migrate up # migrate
+$ sql-migrate down # rollback
+$ sql-migrate new ????? # migration fileの作成
 ```
 
 ## TODO

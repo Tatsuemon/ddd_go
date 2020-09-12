@@ -3,6 +3,7 @@ module github.com/Tatsuemon/ddd_go
 go 1.15
 
 require (
+	bitbucket.org/liamstask/goose v0.0.0-20150115234039-8488cc47d90c // indirect
 	github.com/Microsoft/hcsshim v0.8.9 // indirect
 	github.com/VividCortex/mysqlerr v0.0.0-20200629151747-c28746d985dd // indirect
 	github.com/alecthomas/participle v0.6.0 // indirect
@@ -16,11 +17,17 @@ require (
 	github.com/google/wire v0.4.0
 	github.com/gorilla/mux v1.8.0
 	github.com/jmoiron/sqlx v1.2.0
+	github.com/kylelemons/go-gypsy v1.0.0 // indirect
 	github.com/labstack/gommon v0.3.0
+	github.com/lib/pq v1.8.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.3 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pressly/goose v2.6.0+incompatible // indirect
+	github.com/rubenv/sql-migrate v0.0.0-20200616145509-8d140a17f351 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/skeema/skeema v1.4.5 // indirect
+	github.com/ziutek/mymysql v1.5.4 // indirect
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/sys v0.0.0-20200831180312-196b9ba8737a // indirect
