@@ -15,6 +15,3 @@ $ docker-compose run app sql-migrate up # migrate
 $ docker-compose run app sql-migrate down # rollback
 $ docker-compose run app sql-migrate new ????? # migration fileの作成
 ```
-
-## TODO
-- transaction
