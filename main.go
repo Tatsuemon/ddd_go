@@ -22,7 +22,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}()
-	userContainer := di.NewUserContainer("test", db.DB)
+	userContainer := di.NewUserContainer("development", db.DB)
 	s := server.NewServer()
 	s.Init(userContainer.Handler)
 	s.Run(port)

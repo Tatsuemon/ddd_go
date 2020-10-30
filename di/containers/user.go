@@ -20,8 +20,9 @@ func NewUserContainer(env string, db *sqlx.DB) *UserContainer {
 	switch env {
 	case "development":
 		log.Print("development")
+		user_transaction := datastore.NewTransaction(db)
 		user_repository := datastore.NewUserPersistence(db)
-		user_usecase := usecase.NewUserUseCase(user_repository)
+		user_usecase := usecase.NewUserUseCase(user_repository, user_transaction)
 		user_handler := handler.NewUserHandler(user_usecase)
 		return &UserContainer{
 			Repository: user_repository,
@@ -30,8 +31,9 @@ func NewUserContainer(env string, db *sqlx.DB) *UserContainer {
 		}
 	case "test":
 		log.Print("test")
+		user_transaction := datastore.NewTransaction(db)
 		user_repository := datastore.NewUserPersistence(db)
-		user_usecase := usecase.NewUserUseCase(user_repository)
+		user_usecase := usecase.NewUserUseCase(user_repository, user_transaction)
 		user_handler := handler.NewUserHandler(user_usecase)
 		return &UserContainer{
 			Repository: user_repository,
@@ -40,8 +42,9 @@ func NewUserContainer(env string, db *sqlx.DB) *UserContainer {
 		}
 	default:
 		log.Print("default")
+		user_transaction := datastore.NewTransaction(db)
 		user_repository := datastore.NewUserPersistence(db)
-		user_usecase := usecase.NewUserUseCase(user_repository)
+		user_usecase := usecase.NewUserUseCase(user_repository, user_transaction)
 		user_handler := handler.NewUserHandler(user_usecase)
 		return &UserContainer{
 			Repository: user_repository,

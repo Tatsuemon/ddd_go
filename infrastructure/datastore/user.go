@@ -1,6 +1,9 @@
 package datastore
 
 import (
+	"context"
+	"database/sql"
+
 	"github.com/Tatsuemon/ddd_go/domain/model"
 	"github.com/Tatsuemon/ddd_go/domain/repository"
 
@@ -41,8 +44,15 @@ func (r *userPersistence) FindByName(name string) (*model.User, error) {
 	return &user, nil
 }
 
-func (r *userPersistence) Store(user *model.User) (*model.User, error) {
-	stmt, err := r.conn.Prepare("INSERT INTO `users` (id, name, email) VALUES(?, ?, ?)")
+func (r *userPersistence) Store(ctx context.Context, user *model.User) (*model.User, error) {
+	var tx interface{
+		Prepare(query string) (*sql.Stmt, error)
+	}
+	tx, ok := GetTx(ctx)
+	if !ok {
+		tx = r.conn
+	}
+	stmt, err := tx.Prepare("INSERT INTO `users` (id, name, email) VALUES(?, ?, ?)")
 
 	if err != nil {
 		return nil, err
@@ -63,9 +73,15 @@ func (r *userPersistence) Store(user *model.User) (*model.User, error) {
 	return user, nil
 }
 
-func (r *userPersistence) Update(user *model.User) (*model.User, error) {
-	stmt, err := r.conn.Prepare("UPDATE `users` SET name=?, email=? WHERE id=?")
-
+func (r *userPersistence) Update(ctx context.Context, user *model.User) (*model.User, error) {
+	var tx interface{
+		Prepare(query string) (*sql.Stmt, error)
+	}
+	tx, ok := GetTx(ctx)
+	if !ok {
+		tx = r.conn
+	}
+	stmt, err := tx.Prepare("UPDATE `users` SET name=?, email=? WHERE id=?")
 	if err != nil {
 		return nil, err
 	}

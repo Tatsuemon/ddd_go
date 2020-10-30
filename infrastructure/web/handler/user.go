@@ -74,7 +74,7 @@ func (h *userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	u, err = h.UserUseCase.CreateUser(u)
+	u, err = h.UserUseCase.CreateUser(r.Context(), u)
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
@@ -94,7 +94,7 @@ func (h *userHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	vars := mux.Vars(r)
-	u, err := h.UserUseCase.UpdateUser(u, vars["id"])
+	u, err := h.UserUseCase.UpdateUser(r.Context(), u, vars["id"])
 
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
